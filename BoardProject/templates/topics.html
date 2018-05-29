@@ -1,39 +1,39 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  {{ board.name }} - {{ block.super }}
+    {{ board.name }} - {{ block.super }}
 {% endblock %}
 
 {% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
-  <li class="breadcrumb-item active">{{ board.name }}</li>
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
+    <li class="breadcrumb-item active">{{ board.name }}</li>
 {% endblock %}
 
 {% block content %}
-  <div class="mb-4">
+    <div class="mb-4">
         <a href="{% url 'new_topic' board.pk %}" class="btn btn-primary">New topic</a>
-  </div>
+    </div>
 
-  <table class="table">
-    <thead class="thead-inverse">
-      <tr>
-        <th>Topic</th>
-        <th>Starter</th>
-        <th>Replies</th>
-        <th>Views</th>
-        <th>Last Update</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for topic in board.topics.all %}
+    <table class="table">
+        <thead class="thead-inverse">
         <tr>
-          <td>{{ topic.subject }}</td>
-          <td>{{ topic.starter.username }}</td>
-          <td>0</td>
-          <td>0</td>
-          <td>{{ topic.last_updated }}</td>
+            <th>Topic</th>
+            <th>Starter</th>
+            <th>Replies</th>
+            <th>Views</th>
+            <th>Last Update</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+        </thead>
+        <tbody>
+        {% for topic in topics %}
+            <tr>
+                <td><a href="{% url 'topic_posts' board.pk topic.pk %}">{{ topic.subject }}</a></td>
+                <td>{{ topic.starter.username }}</td>
+                <td>{{ topic.replies }}</td>
+                <td>{{ topic.views }}</td>
+                <td>{{ topic.last_updated }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
